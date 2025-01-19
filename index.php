@@ -46,6 +46,7 @@
 
     <div class="content">
         <h1>Welcome to the Index Page</h1>
+        <h2>Hello From Athul</h2>
         <p>This is the main landing page. Use the navigation bar above to explore other pages.</p>
     </div>
 
