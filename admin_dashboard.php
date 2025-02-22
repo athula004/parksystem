@@ -77,7 +77,7 @@ checkRole(["admin"]);
         </div>
     </div>
     <div class="container">
-        <div class="box"><a href="staff/staffreg.php">Add Staff</a> </div>
+        <div class="box"><a href="/parksystem/staff/staffreg.php">Add Staff</a> </div>
         <div class="box">Manage Staff</div>
         <div class="box">View Reports</div>
         <div class="box">Manage Industry</div>

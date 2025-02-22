@@ -1,6 +1,8 @@
 <?php
 require '../db.php'; // MongoDB connection
-session_start();
+require '../check_role.php';
+checkRole(["admin"]);
+
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];

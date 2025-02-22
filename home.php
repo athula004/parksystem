@@ -201,7 +201,7 @@
 <body>
 
 <div class="navbar">
-        <a class="cname" href="home.php">LandLink</a>
+        <a class="cname" href="index.php">LandLink</a>
         <a class="active"  href="home.php">Home</a>
         <a href="login.html">Login</a>
 
