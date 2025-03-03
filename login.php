@@ -9,6 +9,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user = $usersCollection->findOne(["email" => $email]);
 
     if ($user && password_verify($password, $user["password"])) {
+        // Check status (only staff can log in if inactive)
+        if ($user["role"] !== "staff" && isset($user["status"]) && $user["status"] !== "active") {
+            echo '<script type="text/javascript">
+                    alert("Your account is inactive. Please contact support.");
+                    window.location.href = "login.html";
+                  </script>';
+            exit;
+        }
+
+        // Set session and redirect based on role
         $_SESSION["user_id"] = (string) $user["_id"];
         $_SESSION["role"] = $user["role"];
 

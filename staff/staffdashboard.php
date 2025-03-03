@@ -1,10 +1,31 @@
 <?php
 require '../db.php'; // MongoDB connection
-// require '../check_role.php';
-// checkRole(["admin"]);
+session_start();
 
-// Fetch all staff details from MongoDB
-$staffList = $staffCollection->find()->toArray();
+// Check if the user is logged in and has a "staff" role
+if (!isset($_SESSION["user"]) || $_SESSION["user"]["role"] !== "staff") {
+    echo '<script>alert("Access Denied! Only staff members can access this page."); window.location.href="../login.php";</script>';
+    exit();
+}
+
+// Get logged-in staff's email from the session
+$staffEmail = $_SESSION["user"]["email"];
+
+// Find user details in the users collection
+$user = $usersCollection->findOne(["email" => $staffEmail]);
+
+if (!$user) {
+    echo '<script>alert("User not found!"); window.location.href="../login.php";</script>';
+    exit();
+}
+
+// Find staff details using user ID
+$staff = $staffCollection->findOne(["user_id" => $user["_id"]]);
+
+if (!$staff) {
+    echo '<script>alert("Staff details not found!"); window.location.href="../login.php";</script>';
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,7 +33,7 @@ $staffList = $staffCollection->find()->toArray();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View Staff</title>
+    <title>Staff Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -31,64 +52,46 @@ $staffList = $staffCollection->find()->toArray();
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
-            width: 80%;
-            max-width: 800px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 10px;
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: black;
-            color: white;
+            width: 50%;
+            max-width: 400px;
         }
         img {
-            width: 50px;
-            height: 50px;
+            width: 100px;
+            height: 100px;
             object-fit: cover;
             border-radius: 50%;
+            margin-bottom: 10px;
+        }
+        h2 {
+            margin-bottom: 10px;
+        }
+        p {
+            margin: 5px 0;
+        }
+        button {
+            background: black;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            background: #333;
         }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2>Staff List</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Photo</th>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Age</th>
-                <th>Address</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php foreach ($staffList as $staff): ?>
-                <?php 
-                    // Fetch user details using user_id
-                    $user = $usersCollection->findOne(["_id" => $staff["user_id"]]);
-                    $email = $user ? $user["email"] : "N/A"; 
-                ?>
-                <tr>
-                    <td>
-                        <img src="<?php echo $staff["photo"]; ?>" alt="Staff Image">
-                    </td>
-                    <td><?php echo htmlspecialchars($staff["name"]); ?></td>
-                    <td><?php echo htmlspecialchars($email); ?></td>
-                    <td><?php echo htmlspecialchars($staff["age"]); ?></td>
-                    <td><?php echo htmlspecialchars($staff["address"]); ?></td>
-                </tr>
-            <?php endforeach; ?>
-        </tbody>
-    </table>
+    <h2>Welcome, <?php echo htmlspecialchars($staff["name"]); ?>!</h2>
+    <img src="<?php echo $staff["photo"]; ?>" alt="Staff Photo">
+    <p><strong>Email:</strong> <?php echo htmlspecialchars($staffEmail); ?></p>
+    <p><strong>Age:</strong> <?php echo htmlspecialchars($staff["age"]); ?></p>
+    <p><strong>Address:</strong> <?php echo htmlspecialchars($staff["address"]); ?></p>
+    <button onclick="window.location.href='../logout.php'">Logout</button>
 </div>
 
 </body>
