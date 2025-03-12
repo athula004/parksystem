@@ -31,12 +31,16 @@
             display: block;
             margin-bottom: 5px;
         }
-        input {
+        input, textarea {
             width: 100%;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 5px;
             box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            height: 80px;
         }
         button {
             background-color: #28a745;
@@ -51,13 +55,39 @@
         button:hover {
             background-color: #218838;
         }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            display: none;
+        }
     </style>
+    <script>
+        function validatePasswords() {
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            const errorMessage = document.getElementById("password-error");
+
+            if (password !== confirmPassword) {
+                errorMessage.style.display = "block";
+                return false;
+            } else {
+                errorMessage.style.display = "none";
+                return true;
+            }
+        }
+
+        function handleSubmit(event) {
+            if (!validatePasswords()) {
+                event.preventDefault(); // Prevent form submission if passwords do not match
+            }
+        }
+    </script>
 </head>
 <body>
     <div class="container">
         <h2>Client Registration</h2>
         <p>Clients must register for verification before purchasing products.</p>
-        <form action="#" method="POST">
+        <form action="#" method="POST" onsubmit="handleSubmit(event)">
             <div class="form-group">
                 <label for="name">Full Name</label>
                 <input type="text" id="name" name="name" required>
@@ -72,7 +102,16 @@
             </div>
             <div class="form-group">
                 <label for="address">Address</label>
-                <input type="text" id="address" name="address" required>
+                <textarea id="address" name="address" required></textarea>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <input type="password" id="confirm-password" name="confirm-password" required>
+                <span class="error-message" id="password-error">Passwords do not match!</span>
             </div>
             <button type="submit">Register</button>
         </form>
