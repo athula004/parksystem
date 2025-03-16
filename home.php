@@ -209,14 +209,14 @@
             <a href="#">Industry ▼</a>
             <div class="dropdown-content">
                 <a href="#">Check Approval Status</a>
-                <a href="./industry/registration.php">Register</a>
+                <a href="#">Register</a>
             </div>
         </div>
 
         <div class="dropdown">
             <a href="#">Client ▼</a>
             <div class="dropdown-content">
-                <a href="./client/clientreg.php">Register</a>
+                <a href="#">Register</a>
                 <a href="#">Check Approval Status</a>
             </div>
         </div>
