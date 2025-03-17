@@ -1,31 +1,8 @@
 <?php
 require '../db.php'; // MongoDB connection
-session_start();
-
-// Check if the user is logged in and has a "staff" role
-if (!isset($_SESSION["user"]) || $_SESSION["user"]["role"] !== "staff") {
-    echo '<script>alert("Access Denied! Only staff members can access this page."); window.location.href="../login.php";</script>';
-    exit();
-}
-
-// Get logged-in staff's email from the session
-$staffEmail = $_SESSION["user"]["email"];
-
-// Find user details in the users collection
-$user = $usersCollection->findOne(["email" => $staffEmail]);
-
-if (!$user) {
-    echo '<script>alert("User not found!"); window.location.href="../login.php";</script>';
-    exit();
-}
-
-// Find staff details using user ID
-$staff = $staffCollection->findOne(["user_id" => $user["_id"]]);
-
-if (!$staff) {
-    echo '<script>alert("Staff details not found!"); window.location.href="../login.php";</script>';
-    exit();
-}
+require '../check_role.php';
+checkRole(["staff"]); // Check if user is authorized
+$industryCount = $industriesCollection->countDocuments(['approval_status' => 'approved']);
 ?>
 
 <!DOCTYPE html>
@@ -33,66 +10,121 @@ if (!$staff) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Staff Dashboard</title>
+    <title>Admin Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
             background-color: #f4f4f4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-            height: 100vh;
         }
+        
+        
         .container {
+            padding: 50px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            justify-items: center; 
+            gap: 10px;
+            margin-left: 280px; 
+        }
+
+        
+
+        .box {
             background: white;
-            padding: 20px;
+            padding: 60px;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             text-align: center;
-            width: 50%;
-            max-width: 400px;
-        }
-        img {
-            width: 100px;
-            height: 100px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-bottom: 10px;
-        }
-        h2 {
-            margin-bottom: 10px;
-        }
-        p {
-            margin: 5px 0;
-        }
-        button {
-            background: black;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
             cursor: pointer;
-            width: 100%;
-            margin-top: 10px;
+            transition: transform 0.3s ease-in-out;
         }
-        button:hover {
-            background: #333;
+        
+        .box:hover {
+            background: #ddd;
+            transform: scale(1.05);
+        }
+        .sidebar { 
+            width: 250px; 
+            background: black; 
+            color: white; 
+            padding: 20px; 
+            height: 100vh; 
+            position: fixed; 
+            top: 0; left: 0; 
+            text-align: center; 
+        }
+        .count-box { 
+            background: white; 
+            color: black; 
+            padding: 10px; 
+            border-radius: 8px; 
+            font-size: 15px; 
+            font-weight: bold; 
+            margin-top: 20px; 
+            animation: fadeIn 1s ease-in-out; 
+            cursor: pointer;
+        }
+        .header {
+            color: black;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            margin-left: 280px;
+        }
+
+        .count-box1 { 
+            background:rgb(221, 42, 42); 
+            color: black; 
+            padding: 10px; 
+            border-radius: 8px; 
+            font-size: 15px; 
+            font-weight: bold; 
+            margin-top: 20px;
+            margin-bottom: 30px; 
+            animation: fadeIn 1s ease-in-out; 
+            cursor: pointer;
+        }
+        .count-box:hover, .count-box1:hover {
+            
+            transform: scale(1.05);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>Staff Dashboard</h1>
+    </div>
 
-<div class="container">
-    <h2>Welcome, <?php echo htmlspecialchars($staff["name"]); ?>!</h2>
-    <img src="<?php echo $staff["photo"]; ?>" alt="Staff Photo">
-    <p><strong>Email:</strong> <?php echo htmlspecialchars($staffEmail); ?></p>
-    <p><strong>Age:</strong> <?php echo htmlspecialchars($staff["age"]); ?></p>
-    <p><strong>Address:</strong> <?php echo htmlspecialchars($staff["address"]); ?></p>
-    <button onclick="window.location.href='../logout.php'">Logout</button>
-</div>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Dashboard</h2>
+        <div class="count-box" onclick="window.location.href='#'">➕ Add Raw Material</div>
+        <div class="count-box" onclick="window.location.href='../client/client_approve.php'">✅ Approve Clinet</div>
+        <div class="count-box" onclick="window.location.href='#'">👥 Manage Client</div>
+        <div class="count-box" onclick="window.location.href='viewindustry.php'">🏭 View Industry</div>
+        <div class="count-box" onclick="window.location.href='#'">🛒 Manage Raw Materials</div>
+        <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div>
+        <div class="count-box" onclick="window.location.href='#'">📊 View Products</div>
+        <div class="count-box1" onclick="window.location.href='/parksystem/logout.php'">🔒 Sign Out</div> 
+
+    </div>
+   
+
+    <div class="container">
+        <!-- <div class="box">👨🏻‍💼 Staff: <?= $staffCount > 0 ? $staffCount : 'N/A' ?></div> -->
+        <div class="box">🏭 Industry: <?= $industryCount > 0 ? $industryCount : 'N/A' ?></div>
+        <div class="box">👨🏻‍💼 Client: N/A</div>
+    </div>
 
 </body>
 </html>

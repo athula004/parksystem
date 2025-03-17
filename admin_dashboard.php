@@ -4,6 +4,7 @@ require 'db.php'; // MongoDB connection
 checkRole(["admin"]);
 
 $staffCount = $staffCollection->countDocuments();
+$industryCount = $industriesCollection->countDocuments(['approval_status' => 'approved']);
 ?>
 
 <!DOCTYPE html>
@@ -111,11 +112,12 @@ $staffCount = $staffCollection->countDocuments();
         <h2>Dashboard</h2>
         <div class="count-box" onclick="window.location.href='/parksystem/staff/staffreg.php'">➕ Add Staff</div>
         <div class="count-box" onclick="window.location.href='/parksystem/staff/staffView.php'">👥 Manage Staff</div>
-        <div class="count-box" onclick="window.location.href='#'">✅ Approve Industry</div>
-        <div class="count-box" onclick="window.location.href='#'">🏭 Manage Industry</div>
+        <div class="count-box" onclick="window.location.href='/parksystem/industry/industry_approve.php'">✅ Approve Industry</div>
+        <div class="count-box" onclick="window.location.href='/parksystem/industry/viewindustry.php'">🏭 View Industry</div>
         <div class="count-box" onclick="window.location.href='#'">🛒 View Materials</div>
         <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div>
         <div class="count-box" onclick="window.location.href='#'">💬 Messages</div>  
+        <div class="count-box" onclick="window.location.href='/parksystem/industry/land.php'">🌆 Add LandPhoto</div>
         <div class="count-box1" onclick="window.location.href='/parksystem/logout.php'">🔒 Sign Out</div> 
 
     </div>
@@ -123,7 +125,7 @@ $staffCount = $staffCollection->countDocuments();
 
     <div class="container">
         <div class="box">👨🏻‍💼 Staff: <?= $staffCount > 0 ? $staffCount : 'N/A' ?></div>
-        <div class="box">🏭 Industry:  N/A </div>
+        <div class="box">🏭 Industry: <?= $industryCount > 0 ? $industryCount : 'N/A' ?></div>
         <div class="box">👨🏻‍💼 Client: N/A</div>
     </div>
 

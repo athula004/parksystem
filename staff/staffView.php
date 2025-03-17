@@ -86,7 +86,7 @@ $totalStaff = $staffCollection->countDocuments(); // Get total staff count
                 <?php
                     $user = $usersCollection->findOne(["_id" => $staff["user_id"]]);
                     $email = $user ? $user["email"] : "N/A";
-                    $status = $user ? ($user["status"] ?? "N/A") : "N/A";
+                    $status = $user ? $user["status"] : "N/A" ;
                 ?>
                 <tr>
                     <td><?= htmlspecialchars($staff["name"]) ?></td>    
@@ -95,7 +95,7 @@ $totalStaff = $staffCollection->countDocuments(); // Get total staff count
                     <td><?= htmlspecialchars($email) ?></td>
                     <td><img src="<?= htmlspecialchars($staff["photo"]) ?>" alt="Photo"></td>
                     <td><?= htmlspecialchars($status) ?></td>
-                    <td><a class="edit-btn" href="edit_staff.php?id=<?= $staff['_id'] ?>">Edit</a></td>
+                    <td><a class="edit-btn" href="staffedit.php?id=<?= $staff['_id'] ?>">Edit</a></td>
                 </tr>
             <?php endforeach; ?>
         </table>

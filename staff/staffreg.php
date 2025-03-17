@@ -69,7 +69,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -149,11 +148,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             font-weight: bold;
             transition: background 0.3s;
         }
-
         .back-btn:hover {
             background: #333;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -195,13 +192,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <input type="number" name="age" placeholder="Age" required>
             <input type="text" name="phone" placeholder="Phone Number" required>
             <textarea name="address" placeholder="Address" required></textarea>
-            <input type="file" name="photo" accept="image/*" required>
-            
+            <input type="file" name="photo"  accept=".jpg,.jpeg,.png" required>
             <select name="status" required>
-                <option value="active">Active</option>
+                <option value="active" selected>Active</option>
                 <option value="inactive">Inactive</option>
             </select>
-
             <button type="submit">Register Staff</button>
         </form>
     </div>

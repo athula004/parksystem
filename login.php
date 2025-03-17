@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($user && password_verify($password, $user["password"])) {
         // Check status (only staff can log in if inactive)
-        if ($user["role"] !== "staff" && isset($user["status"]) && $user["status"] !== "active") {
+        if ($user["role"] !== "admin" && isset($user["status"]) && $user["status"] !== "active") {
             echo '<script type="text/javascript">
                     alert("Your account is inactive. Please contact support.");
                     window.location.href = "login.html";
@@ -27,13 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: admin_dashboard.php");
                 break;
             case "staff":
-                header("Location: staff_dashboard.php");
+                header("Location: staff/staffdashboard.php");
                 break;
             case "industry":
-                header("Location: industry_dashboard.php");
+                header("Location: industry/industrydashboard.php");
                 break;
             case "client":
-                header("Location: client_dashboard.php");
+                header("Location: client/client_dashboard.php");
                 break;
             default:
                 echo "Invalid role!";

@@ -208,21 +208,22 @@
         <div class="dropdown">
             <a href="#">Industry ▼</a>
             <div class="dropdown-content">
-                <a href="#">Check Approval Status</a>
-                <a href="#">Register</a>
+                <a href="industry/checkindustry.php">Check Approval Status</a>
+                <a href="industry/reg.php">Register</a>
             </div>
         </div>
 
         <div class="dropdown">
             <a href="#">Client ▼</a>
             <div class="dropdown-content">
-                <a href="#">Register</a>
+                <a href="client/clientreg.php">Register</a>
                 <a href="#">Check Approval Status</a>
             </div>
         </div>
 
-        <a href="#">Existing Industry</a>
+        <a href="industry/industry.php">Existing Industry</a>
         <a href="#">Products</a>
+        <a href="landview.php">Plot</a>
         <a href="about.php">About Us</a>
     </div>
     
