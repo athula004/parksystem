@@ -111,8 +111,8 @@ checkRole(["industry"]);
     <div class="sidebar">
         <h2>Dashboard</h2>
         <div class="count-box" onclick="window.location.href='#'">👥 Account</div>
-        <div class="count-box" onclick="window.location.href='#'">➕ Add Product</div>
-        <div class="count-box" onclick="window.location.href='#'">👥 Manage Product</div>
+        <div class="count-box" onclick="window.location.href='addproduct.php'">➕ Add Product</div>
+        <div class="count-box" onclick="window.location.href='manageproduct.php'">👥 Manage Product</div>
         <div class="count-box" onclick="window.location.href='#'">🛒 Buy Materials</div>
         <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div> 
         <div class="count-box1" onclick="window.location.href='/parksystem/logout.php'">🔒 Sign Out</div> 
