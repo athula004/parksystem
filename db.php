@@ -11,5 +11,5 @@ $clientsCollection = $database->client;
 // $landCollection = $database->land;
 $rawMaterialCollection = $database->raw_material;
 $gridFSBucket = $database->selectGridFSBucket();
-
+$productsCollection = $database->products;
 ?>
