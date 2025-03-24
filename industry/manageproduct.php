@@ -1,10 +1,43 @@
 <?php
 require '../db.php'; // MongoDB connection
-require '../check_role.php';
-checkRole(["industry"]); // Only Admin can access this page
 
-$productList = $productsCollection->find([]); // Fetch all products
-$totalProducts = $productsCollection->countDocuments(); // Get total product count
+// Fetch all products
+$productCollection = $database->products;
+$products = $productCollection->find();
+
+// Handle Edit Product
+if ($_SERVER['REQUEST_METHOD'] == "POST" && isset($_POST['edit_product'])) {
+    $id = new MongoDB\BSON\ObjectId($_POST['product_id']);
+
+    $updateResult = $productCollection->updateOne(
+        ["_id" => $id],
+        ['$set' => [
+            $productName = trim($_POST['product_name']),
+    $description = trim($_POST['description']),
+    $price = trim($_POST['price']),
+    $quantity = trim($_POST['quantity']),
+    $category = trim($_POST['category']),
+        ]]
+    );
+
+    if ($updateResult->getModifiedCount() > 0) {
+        echo "<script>alert('Product Updated Successfully!'); window.location.href='manage_products.php';</script>";
+    } else {
+        echo "<script>alert('Error updating product!');</script>";
+    }
+}
+
+// Handle Delete Product
+if (isset($_GET['delete_id'])) {
+    $id = new MongoDB\BSON\ObjectId($_GET['delete_id']);
+    $deleteResult = $productCollection->deleteOne(["_id" => $id]);
+
+    if ($deleteResult->getDeletedCount() > 0) {
+        echo "<script>alert('Product Deleted!'); window.location.href='manage_products.php';</script>";
+    } else {
+        echo "<script>alert('Error deleting product!');</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -12,99 +45,74 @@ $totalProducts = $productsCollection->countDocuments(); // Get total product cou
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product List</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f4f4; margin: 20px; display: flex; }
-        
-        /* Sidebar */
-        .sidebar { 
-            width: 250px; 
-            background: black; 
-            color: white; 
-            padding: 20px; 
-            height: 100vh; 
-            position: fixed; 
-            top: 0; left: 0; 
-            text-align: center; 
-        }
-
-        .count-box { 
-            background: white; 
-            color: black; 
-            padding: 15px; 
-            border-radius: 8px; 
-            font-size: 20px; 
-            font-weight: bold; 
-            margin-top: 20px; 
-            animation: fadeIn 1s ease-in-out; 
-        }
-
-        /* Main Content */
-        .content { margin-left: 270px;
-             width: calc(100% - 270px); }
-        h2 { text-align: center; }
-
-        /* Table Styling */
-        table { width: 100%; border-collapse: collapse; background: white; }
-        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
-        th { background: black; color: white; }
-        img { width: 50px; height: 50px; border-radius: 5px; }
-        .edit-btn, .delete-btn { 
-            background: black; 
-            color: white; 
-            padding: 5px 10px; 
-            text-decoration: none; 
-            border-radius: 5px; 
-            margin: 2px;
-        }
-        .edit-btn:hover, .delete-btn:hover { background: #333; }
-
-        /* Animation */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-    </style>
+    <title>Manage Products</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
 </head>
 <body>
+    <div class="container mt-4">
+        <a href="industrydashboard.php" class="btn btn-secondary mb-3">⬅ Back to Dashboard</a>
+        <h2 class="mb-4">Manage Products</h2>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-        <h2>Dashboard</h2>
-        <div class="count-box">📦 Total Products: <?= $totalProducts ?></div>
-        <div class="count-box" onclick="window.location.href='../admin_dashboard.php'" style="cursor: pointer;">🏠 Home</div>
-    </div>
-
-    <!-- Main Content -->
-    <div class="content">
-        <h2>Product List</h2>
-        <table>
-            <tr>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Description</th>
-                <th>Category</th>
-                <th>Image</th>
-                <th>Stock</th>
-                <th>Actions</th>
-            </tr>
-
-            <?php foreach ($productList as $product): ?>
+        <table class="table table-bordered table-striped">
+            <thead>
                 <tr>
-                    <td><?= htmlspecialchars($product["name"]) ?></td>    
-                    <td><?= htmlspecialchars($product["price"]) ?></td>
-                    <td><?= htmlspecialchars($product["description"]) ?></td>
-                    <td><?= htmlspecialchars($product["category"]) ?></td>
-                    <td><img src="<?= htmlspecialchars($product["image"]) ?>" alt="Product Image"></td>
-                    <td><?= htmlspecialchars($product["stock"]) ?></td>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Stock Quantity</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $count = 1; foreach ($products as $product) { ?>
+                <tr>
+                    <td><?= $count++; ?></td>
+                    <td><?= htmlspecialchars($product['product_name']); ?></td>
+                    <td><?= htmlspecialchars($product['description']); ?></td>
+                    <td>$<?= htmlspecialchars($product['price']); ?></td>
+                    <td><?= htmlspecialchars($product['quantity']); ?></td>
                     <td>
-                        <a class="edit-btn" href="productedit.php?id=<?= $product['_id'] ?>">Edit</a>
-                        <a class="delete-btn" href="productdelete.php?id=<?= $product['_id'] ?>" onclick="return confirm('Are you sure you want to delete this product?');">Delete</a>
+                        <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editProductModal<?= $product['_id']; ?>">✏ Edit</button>
+                        <a href="?delete_id=<?= $product['_id']; ?>" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure?')">🗑 Delete</a>
                     </td>
                 </tr>
-            <?php endforeach; ?>
+
+                <!-- Edit Modal for each Product -->
+                <div class="modal fade" id="editProductModal<?= $product['_id']; ?>" tabindex="-1">
+                    <div class="modal-dialog">
+                        <form action="" method="POST" class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Edit Product</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                                <input type="hidden" name="product_id" value="<?= $product['_id']; ?>">
+                                
+                                <label>Name:</label>
+                                <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($product['name']); ?>" required>
+
+                                <label>Description:</label>
+                                <input type="text" name="description" class="form-control" value="<?= htmlspecialchars($product['description']); ?>" required>
+
+                                <label>Stock Quantity:</label>
+                                <input type="number" name="stock_quantity" class="form-control" value="<?= htmlspecialchars($product['stock_quantity']); ?>" required>
+
+                                <label>Price:</label>
+                                <input type="number" name="price" class="form-control" value="<?= htmlspecialchars($product['price']); ?>" step="0.01" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="submit" name="edit_product" class="btn btn-primary">Save Changes</button>
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <?php } ?>
+            </tbody>
         </table>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
