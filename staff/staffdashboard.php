@@ -108,11 +108,11 @@ $industryCount = $industriesCollection->countDocuments(['approval_status' => 'ap
     <!-- Sidebar -->
     <div class="sidebar">
         <h2>Dashboard</h2>
-        <div class="count-box" onclick="window.location.href='#'">➕ Add Raw Material</div>
-        <div class="count-box" onclick="window.location.href='../client/client_approve.php'">✅ Approve Clinet</div>
+        <div class="count-box" onclick="window.location.href='add_raw.php'">➕ Add Raw Material</div>
+        <div class="count-box" onclick="window.location.href='../client/client_approve.php'">✅ Approve Client</div>
         <div class="count-box" onclick="window.location.href='#'">👥 Manage Client</div>
         <div class="count-box" onclick="window.location.href='viewindustry.php'">🏭 View Industry</div>
-        <div class="count-box" onclick="window.location.href='#'">🛒 Manage Raw Materials</div>
+        <div class="count-box" onclick="window.location.href='manage_raw_materials.php'">🛒 Manage Raw Materials</div>
         <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div>
         <div class="count-box" onclick="window.location.href='#'">📊 View Products</div>
         <div class="count-box1" onclick="window.location.href='/parksystem/logout.php'">🔒 Sign Out</div> 

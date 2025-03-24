@@ -9,7 +9,7 @@ $industriesCollection = $database->industries;
 $landCollection = $database->land;
 $clientsCollection = $database->client;
 // $landCollection = $database->land;
-// $rawMaterialCollection = $database->raw_material;
+$rawMaterialCollection = $database->raw_material;
 $gridFSBucket = $database->selectGridFSBucket();
 
 ?>
