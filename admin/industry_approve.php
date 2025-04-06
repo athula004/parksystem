@@ -140,7 +140,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </style>
 </head>
 <body>
-<a href="/parksystem/admin_dashboard.php" class="back-btn">← Back</a>
+<a href="admin_dashboard.php" class="back-btn">← Back</a>
 
 <h2>Manage Industries</h2>
 

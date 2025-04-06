@@ -59,7 +59,7 @@ if (isset($_GET['delete_id'])) {
                     <th>#</th>
                     <th>Name</th>
                     <th>Description</th>
-                    <th>Price</th>
+                    <th>Price/Kg</th>
                     <th>Stock Quantity</th>
                     <th>Actions</th>
                 </tr>
@@ -70,7 +70,7 @@ if (isset($_GET['delete_id'])) {
                     <td><?= $count++; ?></td>
                     <td><?= htmlspecialchars($material['name']); ?></td>
                     <td><?= htmlspecialchars($material['description']); ?></td>
-                    <td>$<?= htmlspecialchars($material['price']); ?></td>
+                    <td>₹<?= htmlspecialchars($material['price']); ?></td>
                     <td><?= htmlspecialchars($material['stock_quantity']); ?></td>
                     <td>
                         <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editMaterialModal<?= $material['_id']; ?>">✏ Edit</button>

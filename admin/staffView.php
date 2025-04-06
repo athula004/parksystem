@@ -3,6 +3,10 @@ require '../db.php'; // MongoDB connection
 require '../check_role.php';
 checkRole(["admin"]); // Only Admin can access this page
 
+// Ensure collections are properly initialized
+$staffCollection = $database->staff; 
+$usersCollection = $database->users;
+
 $staffList = $staffCollection->find([]); // Fetch all staff
 $totalStaff = $staffCollection->countDocuments(); // Get total staff count
 ?>
@@ -40,8 +44,10 @@ $totalStaff = $staffCollection->countDocuments(); // Get total staff count
         }
 
         /* Main Content */
-        .content { margin-left: 270px;
-             width: calc(100% - 270px); }
+        .content { 
+            margin-left: 270px;
+            width: calc(100% - 270px); 
+        }
         h2 { text-align: center; }
 
         /* Table Styling */
@@ -49,7 +55,13 @@ $totalStaff = $staffCollection->countDocuments(); // Get total staff count
         th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
         th { background: black; color: white; }
         img { width: 50px; height: 50px; border-radius: 5px; }
-        .edit-btn { background: black; color: white; padding: 5px 10px; text-decoration: none; border-radius: 5px; }
+        .edit-btn { 
+            background: black; 
+            color: white; 
+            padding: 5px 10px; 
+            text-decoration: none; 
+            border-radius: 5px; 
+        }
         .edit-btn:hover { background: #333; }
 
         /* Animation */
@@ -65,7 +77,7 @@ $totalStaff = $staffCollection->countDocuments(); // Get total staff count
     <div class="sidebar">
         <h2>Dashboard</h2>
         <div class="count-box">👨🏻‍💼 Total Staff: <?= $totalStaff ?></div>
-        <div class="count-box" onclick="window.location.href='../admin_dashboard.php'" style="cursor: pointer;">🏠 Home</div>
+        <div class="count-box" onclick="window.location.href='admin_dashboard.php'" style="cursor: pointer;">🏠 Home</div>
     </div>
 
     <!-- Main Content -->
@@ -85,15 +97,16 @@ $totalStaff = $staffCollection->countDocuments(); // Get total staff count
             <?php foreach ($staffList as $staff): ?>
                 <?php
                     $user = $usersCollection->findOne(["_id" => $staff["user_id"]]);
-                    $email = $user ? $user["email"] : "N/A";
-                    $status = $user ? $user["status"] : "N/A" ;
+                    $email = $user["email"] ?? "N/A";
+                    $status = $user["status"] ?? "N/A";
+                    $photo = !empty($staff["photo"]) ? htmlspecialchars($staff["photo"]) : 'default.jpg';
                 ?>
                 <tr>
                     <td><?= htmlspecialchars($staff["name"]) ?></td>    
                     <td><?= htmlspecialchars($staff["age"]) ?></td>
                     <td><?= htmlspecialchars($staff["address"]) ?></td>
                     <td><?= htmlspecialchars($email) ?></td>
-                    <td><img src="<?= htmlspecialchars($staff["photo"]) ?>" alt="Photo"></td>
+                    <td><img src="<?= $photo ?>" alt="Photo"></td>
                     <td><?= htmlspecialchars($status) ?></td>
                     <td><a class="edit-btn" href="staffedit.php?id=<?= $staff['_id'] ?>">Edit</a></td>
                 </tr>

@@ -1,6 +1,6 @@
 <?php
-require 'check_role.php';
-require 'db.php'; // MongoDB connection
+require dirname(__DIR__) . '/check_role.php';
+require __DIR__ . '/../db.php'; // MongoDB connection
 checkRole(["admin"]);
 
 $staffCount = $staffCollection->countDocuments();
@@ -110,15 +110,15 @@ $industryCount = $industriesCollection->countDocuments(['approval_status' => 'ap
     <!-- Sidebar -->
     <div class="sidebar">
         <h2>Dashboard</h2>
-        <div class="count-box" onclick="window.location.href='/parksystem/staff/staffreg.php'">➕ Add Staff</div>
-        <div class="count-box" onclick="window.location.href='/parksystem/staff/staffView.php'">👥 Manage Staff</div>
-        <div class="count-box" onclick="window.location.href='/parksystem/industry/industry_approve.php'">✅ Approve Industry</div>
-        <div class="count-box" onclick="window.location.href='/parksystem/industry/viewindustry.php'">🏭 View Industry</div>
-        <div class="count-box" onclick="window.location.href='#'">🛒 View Materials</div>
+        <div class="count-box" onclick="window.location.href='staffreg.php'">➕ Add Staff</div>
+        <div class="count-box" onclick="window.location.href='staffView.php'">👥 Manage Staff</div>
+        <div class="count-box" onclick="window.location.href='industry_approve.php'">✅ Approve Industry</div>
+        <div class="count-box" onclick="window.location.href='viewindustry.php'">🏭 View Industry</div>
+        <div class="count-box" onclick="window.location.href='view_materials.php'">🛒 View Materials</div>
         <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div>
         <div class="count-box" onclick="window.location.href='#'">💬 Messages</div>  
-        <div class="count-box" onclick="window.location.href='/parksystem/industry/land.php'">🌆 Add LandPhoto</div>
-        <div class="count-box1" onclick="window.location.href='/parksystem/logout.php'">🔒 Sign Out</div> 
+        <div class="count-box" onclick="window.location.href='land.php'">🌆 Add LandPhoto</div>
+        <div class="count-box1" onclick="window.location.href='../logout.php'">🔒 Sign Out</div> 
 
     </div>
    

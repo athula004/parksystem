@@ -57,11 +57,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin - Approve Clients</title>
+    <title>Staff- Approve Clients</title>
     <link rel="stylesheet" href="../styles.css"> <!-- Your CSS file -->
 </head>
 <body>
-<a href="../admin_dashboard.php" class="back-btn">← Back</a>
+<a href="staffdashboard.php" class="back-btn">← Back</a>
 
 <h2>Approve Clients</h2>
 
