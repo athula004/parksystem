@@ -21,14 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($password !== $confirm_password) {
         $error = "Passwords do not match!";
     } else {
-        // Check if email already exists
-        $existingClient = $clientsCollection->findOne(['email' => $email]);
-        if ($existingClient) {
+        // Check if email already exists in USERS collection
+        $existingUser = $usersCollection->findOne(['email' => $email]);
+        if ($existingUser) {
             $error = "Email already registered.";
         } else {
-            // Hash password
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
-
+            // Handle file upload first
             if (isset($_FILES['id_proof']) && $_FILES['id_proof']['error'] === 0) {
                 $targetDir = "uploads/id_proofs/";
                 
@@ -44,27 +42,38 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $fileType = strtolower(pathinfo($targetFilePath, PATHINFO_EXTENSION));
                 if (in_array($fileType, ['jpg', 'jpeg', 'png', 'pdf'])) {
                     if (move_uploaded_file($_FILES['id_proof']['tmp_name'], $targetFilePath)) {
-
+                        // File uploaded successfully, now create user and client
+                        
+                        // Hash password
+                        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+                        
+                        // Insert user first
                         $userInsertResult = $usersCollection->insertOne([
                             "email" => $email,
                             "password" => $hashedPassword,
                             "role" => $role,
-                            "status" => $status 
+                            "status" => $status
                         ]);
                 
                         if ($userInsertResult->getInsertedCount() > 0) {
                             $userId = $userInsertResult->getInsertedId();
-                        // File upload success, insert data into MongoDB
-                        $clientsCollection->insertOne([
-                            "name" => $name,
-                            "phone" => $phone,
-                            "address" => $address,
-                            "id_proof" => $targetFilePath, // Store file path
-                            "approval_status" => "Pending",
-                            "created_at" => new MongoDB\BSON\UTCDateTime()
-                        ]);
-                        
-                        $success = "Registration successful! Wait for approval.";
+                            
+                            // Insert client with reference to user
+                            $clientsCollection->insertOne([
+                                "user_id" => $userId,  // Reference to user document
+                                "name" => $name,
+                                "email" => $email,  // Duplicate email for easy querying
+                                "phone" => $phone,
+                                "address" => $address,
+                                "id_proof" => $targetFilePath,
+                                "approval_status" => "Pending",
+                                "created_at" => new UTCDateTime()
+                            ]);
+                            
+                            $success = "Registration successful! Wait for approval.";
+                        } else {
+                            $error = "Failed to create user account.";
+                        }
                     } else {
                         $error = "File upload failed.";
                     }
@@ -75,7 +84,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $error = "ID Proof is required.";
             }
         }
-    }
     }
 }
 ?>
@@ -166,6 +174,16 @@ a {
     font-weight: bold; 
 }
 
+.upload {  
+    color:rgb(65, 65, 65); 
+}
+.upload p { 
+    font-size: 13px; 
+    margin-top: 0px; 
+    margin-left: 6px;
+    text-align: left;
+    
+}
 a:hover { 
     text-decoration: underline; 
 }
@@ -209,7 +227,8 @@ a:hover {
         <textarea name="address" required placeholder="Address" rows="3"></textarea>
         <input type="password" id="password" name="password" required placeholder="Password">
         <input type="password" id="confirm_password" name="confirm_password" required placeholder="Confirm Password">
-        <input type="file" name="id_proof" required accept="image/*,application/pdf">
+        <input type="file" name="id_proof" required accept="image/*,application/pdf" placeholder="ID Proof">
+        <div class="upload"><p>Upload your ID proof (JPG, PNG, PDF)</p></div>
         <button type="submit">Register</button>
     </form>
 

@@ -3,6 +3,7 @@ require '../db.php'; // MongoDB connection
 require '../check_role.php';
 checkRole(["staff"]); // Check if user is authorized
 $industryCount = $industriesCollection->countDocuments(['approval_status' => 'approved']);
+$clinetCount = $clientsCollection->countDocuments(['approval_status' => 'approved']);
 ?>
 
 <!DOCTYPE html>
@@ -109,8 +110,8 @@ $industryCount = $industriesCollection->countDocuments(['approval_status' => 'ap
     <div class="sidebar">
         <h2>Dashboard</h2>
         <div class="count-box" onclick="window.location.href='add_raw.php'">➕ Add Raw Material</div>
-        <div class="count-box" onclick="window.location.href='client_approve.php'">✅ Approve Client</div>
-        <div class="count-box" onclick="window.location.href='#'">👥 Manage Client</div>
+        <div class="count-box" onclick="window.location.href='../client/client_approve.php'">✅ Approve Client</div>
+        <div class="count-box" onclick="window.location.href='../client/manage_client.php'">👥 Manage Client</div>
         <div class="count-box" onclick="window.location.href='viewindustry.php'">🏭 View Industry</div>
         <div class="count-box" onclick="window.location.href='manage_raw_materials.php'">🛒 Manage Raw Materials</div>
         <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div>
@@ -123,7 +124,7 @@ $industryCount = $industriesCollection->countDocuments(['approval_status' => 'ap
     <div class="container">
         <!-- <div class="box">👨🏻‍💼 Staff: <?= $staffCount > 0 ? $staffCount : 'N/A' ?></div> -->
         <div class="box">🏭 Industry: <?= $industryCount > 0 ? $industryCount : 'N/A' ?></div>
-        <div class="box">👨🏻‍💼 Client: N/A</div>
+        <div class="box">👨🏻‍💼 Client: <?= $clinetCount > 0 ? $clinetCount : 'N/A' ?></div>
     </div>
 
 </body>

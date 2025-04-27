@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 header("Location: industry/industrydashboard.php");
                 break;
             case "client":
-                header("Location: client/client_dashboard.php");
+                header("Location: client/clientdashboard.php");
                 break;
             default:
                 echo "Invalid role!";
