@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ]);
 
             if ($staffInsertResult->getInsertedCount() > 0) {
-                echo '<script>alert("Staff Registered Successfully!"); window.location.href="../admin_dashboard.php";</script>';
+                echo '<script>alert("Staff Registered Successfully!"); window.location.href="admin_dashboard.php";</script>';
             } else {
                 echo '<script>alert("Error storing staff details!");</script>';
             }

@@ -217,7 +217,7 @@
             <a href="#">Client ▼</a>
             <div class="dropdown-content">
                 <a href="client/clientreg.php">Register</a>
-                <a href="#">Check Approval Status</a>
+                <a href="client/checkclient.php">Check Approval Status</a>
             </div>
         </div>
 

@@ -92,15 +92,15 @@ $approvedIndustries = $industriesCollection->find(['approval_status' => 'approve
                 <td><?php echo htmlspecialchars($industry['address']); ?></td>
                 <td><?php echo htmlspecialchars($industry['description']); ?></td>
                 <td>
-                    <?php if (!empty($industry['logo'])): ?>
-                        <img src="<?php echo htmlspecialchars($industry['logo']); ?>" alt="Logo">
+                    <?php if (!empty('../industry/' .$industry['logo'])): ?>
+                        <img src="<?php echo htmlspecialchars('../industry/' .$industry['logo']); ?>" alt="Logo">
                     <?php else: ?>
                         N/A
                     <?php endif; ?>
                 </td>
                 <td>
-                    <?php if (!empty($industry['certificate'])): ?>
-                        <a href="<?php echo htmlspecialchars($industry['certificate']); ?>" target="_blank">View Certificate</a>
+                    <?php if (!empty('../industry/' .$industry['certificate'])): ?>
+                        <a href="<?php echo htmlspecialchars('../industry/' .$industry['certificate']); ?>" target="_blank">View Certificate</a>
                     <?php else: ?>
                         N/A
                     <?php endif; ?>

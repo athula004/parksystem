@@ -170,14 +170,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td><?php echo htmlspecialchars($industry['description']); ?></td>
                 <td>
                     <?php if (!empty($industry['logo'])): ?>
-                        <img src="<?php echo htmlspecialchars($industry['logo']); ?>" alt="Logo">
+                        <img src="<?php echo htmlspecialchars('../industry/' .$industry['logo']); ?>" alt="Logo">
                     <?php else: ?>
                         N/A
                     <?php endif; ?>
                 </td>
                 <td>
                     <?php if (!empty($industry['certificate'])): ?>
-                        <a href="<?php echo htmlspecialchars($industry['certificate']); ?>" target="_blank">View Certificate</a>
+                        <a href="<?php echo htmlspecialchars('../industry/' .$industry['certificate']); ?>" target="_blank">View Certificate</a>
                     <?php else: ?>
                         N/A
                     <?php endif; ?>
