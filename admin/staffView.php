@@ -108,7 +108,7 @@ $totalStaff = $staffCollection->countDocuments(); // Get total staff count
                     <td><?= htmlspecialchars($email) ?></td>
                     <td><img src="<?= $photo ?>" alt="Photo"></td>
                     <td><?= htmlspecialchars($status) ?></td>
-                    <td><a class="edit-btn" href="staffedit.php?id=<?= $staff['_id'] ?>">Edit</a></td>
+                    <td><a class="edit-btn" href="../staff/staffedit.php?id=<?= $staff['_id'] ?>">Edit</a></td>
                 </tr>
             <?php endforeach; ?>
         </table>

@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         font-size: 24px;
         margin-bottom: 20px;
         text-align: center;
-        color: #007bff;
+        color:rgb(4, 7, 10);
     }
 
     input, textarea, select, button {
@@ -131,9 +131,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     input:focus, textarea:focus, select:focus {
-        border-color: #80bdff;
+        border-color:rgb(4, 6, 8);
         outline: none;
-        box-shadow: 0 0 4px rgba(0, 123, 255, 0.25);
+        box-shadow: 0 0 4px rgba(2, 7, 12, 0.25);
     }
 
     textarea {
@@ -141,7 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     button {
-        background-color: #007bff;
+        background-color:rgb(10, 10, 10);
         color: #fff;
         border: none;
         cursor: pointer;
@@ -149,7 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     button:hover {
-        background-color: #0056b3;
+        background-color:rgb(4, 7, 10);
     }
 
     img {
