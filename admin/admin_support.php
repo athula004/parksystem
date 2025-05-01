@@ -115,9 +115,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             text-align: center;
             margin-bottom: 15px;
         }
+        .back-button {
+    display: inline-block;
+    margin-bottom: 15px;
+    text-decoration: none;
+    color: #007BFF;
+    font-weight: bold;
+    font-size: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+.back-button:hover {
+    text-decoration: underline;
+}
     </style>
 </head>
 <body>
+<a href="admin_dashboard.php" class="back-button">← Back</a>
 <div class="container">
     <h2>Support Messages</h2>
 
