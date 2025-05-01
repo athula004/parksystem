@@ -12,4 +12,5 @@ $clientsCollection = $database->client;
 $rawMaterialCollection = $database->raw_material;
 $gridFSBucket = $database->selectGridFSBucket();
 $productsCollection = $database->products;
+$messagesCollection = $database->messages;
 ?>
