@@ -90,7 +90,7 @@ if (isset($_GET['delete_id'])) {
                                 <input type="hidden" name="product_id" value="<?= $product['_id']; ?>">
                                 
                                 <label>Name:</label>
-                                <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($product['name']); ?>" required>
+                                <input type="text" name="name" class="form-control" value="<?= htmlspecialchars($product['product_name']); ?>" required>
 
                                 <label>Description:</label>
                                 <input type="text" name="description" class="form-control" value="<?= htmlspecialchars($product['description']); ?>" required>
