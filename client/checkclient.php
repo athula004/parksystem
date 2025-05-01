@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
             ];
             $approval_status = $client['approval_status'] ?? 'Pending'; 
         } else {
-            $error = "Industry details not found.";
+            $error = "Client not found.";
         }
     }
 }
