@@ -86,8 +86,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,152 +93,226 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Industry Registration</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --light-color: #ffffff;
+            --dark-color: #1a1a1a;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
         body {
             font-family: 'Roboto', sans-serif;
-            background-color: #f4f4f4;
+            background-color: #f8f9fa;
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align items to the top */
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
             padding: 20px;
-            margin: 0; /* Remove default margin */
-            min-height: 100vh; /* Ensure the body takes at least full height */
+            position: relative;
         }
+
+        .back-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            text-decoration: none;
+            background: var(--primary-color);
+            color: var(--light-color);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            box-shadow: var(--shadow);
+            border: 2px solid var(--primary-color);
+        }
+
+        .back-btn:hover {
+            background: var(--light-color);
+            color: var(--primary-color);
+            transform: translateX(-5px);
+        }
+
         form {
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background: var(--light-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
             width: 100%;
-            max-width: 400px; /* Maximum width for larger screens */
-            box-sizing: border-box; /* Include padding in width calculation */
+            max-width: 500px;
+            margin-top: 40px;
+            border-top: 4px solid var(--accent-color);
         }
+
         h2 {
             text-align: center;
-            margin-bottom: 20px;
-            color: #333;
+            margin-bottom: 25px;
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 10px;
         }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+
         label {
-            margin-top: 10px;
+            display: block;
+            margin-top: 15px;
             font-weight: 500;
-            color: #555;
+            color: var(--primary-color);
         }
-        input, textarea {
+
+        input, textarea, select {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            transition: border-color 0.3s;
-            box-sizing: border-box; /* Include padding in width calculation */
+            padding: 12px 15px;
+            margin: 8px 0 15px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: var(--transition);
         }
-        input:focus, textarea:focus {
-            border-color: #007BFF;
+
+        input:focus, textarea:focus, select:focus {
+            border-color: var(--accent-color);
             outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
         }
+
         .error {
-            color: red;
-            font-size: 12px;
-            margin-top: -8px;
-            margin-bottom: 10px;
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            display: block;
         }
+
         button {
-            background-color:rgb(8, 8, 8);
-            color: white;
-            padding: 12px;
+            background-color: var(--primary-color);
+            color: var(--light-color);
+            padding: 14px;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
             width: 100%;
             font-size: 16px;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color:rgb(255, 255, 255);
-            color: black;
-            border: 1px solid black;
+            font-weight: 500;
+            transition: var(--transition);
+            margin-top: 20px;
         }
 
-        /* Responsive Styles */
+        button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        input[type="file"] {
+            padding: 10px;
+            background: #f8f9fa;
+            border: 1px dashed var(--border-color);
+        }
+
         @media (max-width: 600px) {
             form {
-                padding: 20px; /* Reduce padding on smaller screens */
+                padding: 30px 20px;
+                margin-top: 60px;
             }
+            
             h2 {
-                font-size: 1.5rem; /* Adjust heading size */
+                font-size: 1.5rem;
             }
-            input, textarea {
-                padding: 10px; /* Adjust padding for inputs */
-            }
-            button {
-                padding: 10px; /* Adjust button padding */
+            
+            .back-btn {
+                top: 15px;
+                left: 15px;
+                padding: 8px 15px;
+                font-size: 14px;
             }
         }
     </style>
 </head>
 <body>
+    <a href="../home.php" class="back-btn">
+        <i class="bi bi-arrow-left"></i> Back
+    </a>
 
-<form id="registrationForm" method="POST" enctype="multipart/form-data">
-    <h2>Industry Registration</h2>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+    <form id="registrationForm" method="POST" enctype="multipart/form-data">
+        <h2>Industry Registration</h2>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
 
-    <label for="confirm_password">Confirm Password:</label>
-    <input type="password" id="confirm_password" name="confirm_password" required>
-    <span id="passwordError" class="error"></span>
+        <label for="confirm_password">Confirm Password:</label>
+        <input type="password" id="confirm_password" name="confirm_password" required>
+        <span id="passwordError" class="error"></span>
 
-    <label for="industry_name">Industry Name:</label>
-    <input type="text" id="industry_name" name="industry_name" required>
+        <label for="industry_name">Industry Name:</label>
+        <input type="text" id="industry_name" name="industry_name" required>
 
-    <label for="land_area">Land Area Required (in sq ft):</label>
-    <input type="number" id="land_area" name="land_area" required>
+        <label for="land_area">Land Area Required (in sq ft):</label>
+        <input type="number" id="land_area" name="land_area" required>
 
-    <label for="contact">Contact Number:</label>
-    <input type="tel" id="contact" name="contact" required>
+        <label for="contact">Contact Number:</label>
+        <input type="tel" id="contact" name="contact" required>
 
-    <label for="address">Address:</label>
-    <textarea id="address" name="address" required></textarea>
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" required></textarea>
 
-    <label for="description">Industry Description:</label>
-    <textarea id="description" name="description" required></textarea>
+        <label for="description">Industry Description:</label>
+        <textarea id="description" name="description" required></textarea>
 
-    <label for="logo">Upload Logo:</label>
-    <input type="file" id="logo" name="logo" accept=".jpg,.jpeg,.png" required>
+        <label for="logo">Upload Logo:</label>
+        <input type="file" id="logo" name="logo" accept=".jpg,.jpeg,.png" required>
 
-    <label for="certificate">Upload Industry Certificate:</label>
-    <input type="file" id="certificate" name="certificate" accept=".pdf,.doc,.docx" required>
+        <label for="certificate">Upload Industry Certificate:</label>
+        <input type="file" id="certificate" name="certificate" accept=".pdf,.doc,.docx" required>
 
-    <button type="submit">Register</button>
-</form>
+        <button type="submit">Register</button>
+    </form>
 
-<script>
-    const form = document.getElementById('registrationForm');
-    const password = document.getElementById('password');
-    const confirmPassword = document.getElementById('confirm_password');
-    const passwordError = document.getElementById('passwordError');
+    <script>
+        const form = document.getElementById('registrationForm');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirm_password');
+        const passwordError = document.getElementById('passwordError');
 
-    function validatePassword() {
-        if (password.value !== confirmPassword.value) {
-            passwordError.textContent = 'Passwords do not match.';
-            return false;
-        } else {
-            passwordError.textContent = '';
-            return true;
+        function validatePassword() {
+            if (password.value !== confirmPassword.value) {
+                passwordError.textContent = 'Passwords do not match.';
+                return false;
+            } else {
+                passwordError.textContent = '';
+                return true;
+            }
         }
-    }
 
-    password.addEventListener('input', validatePassword);
-    confirmPassword.addEventListener('input', validatePassword);
+        password.addEventListener('input', validatePassword);
+        confirmPassword.addEventListener('input', validatePassword);
 
-    form.addEventListener('submit', function(event) {
-        if (!validatePassword()) {
-            event.preventDefault();
-        }
-    });
-</script>
-
+        form.addEventListener('submit', function(event) {
+            if (!validatePassword()) {
+                event.preventDefault();
+            }
+        });
+    </script>
 </body>
 </html>

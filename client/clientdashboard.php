@@ -24,7 +24,7 @@ $clientAddress = 'N/A';
 
 // Initialize cart and order counts
 $cartItemsCount = 0;
-$ordersCount = 0;
+$ordersCount =  0;
 
 try {
     if ($user_id) {
@@ -42,12 +42,9 @@ try {
                 $clientPhone = $clientData['phone'] ?? 'N/A';
                 $clientAddress = $clientData['address'] ?? 'N/A';
             }
-
-            // Fetch cart items count (assuming 'cart' collection)
-            // $cartItemsCount = $cartCollection->countDocuments(["user_id" => new MongoDB\BSON\ObjectId($user_id)]);
-
-            // // Fetch orders count (assuming 'orders' collection)
-            // $ordersCount = $ordersCollection->countDocuments(["user_id" => new MongoDB\BSON\ObjectId($user_id)]);
+            $ordersCount = $ordersCollection->countDocuments([
+                "client_id" => new MongoDB\BSON\ObjectId($user_id) // Changed from user_id to client_id if needed
+            ]);
         }
     }
 } catch (MongoDB\Driver\Exception\Exception $e) {
@@ -62,132 +59,202 @@ try {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Client Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #4a6bff;
+            --secondary-color: #f8f9fa;
+            --accent-color: #ff6b6b;
+            --dark-color: #333;
+            --light-color: #fff;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f4f4f4;
+            background-color: #f5f7fa;
+            color: #333;
         }
 
         .container {
-            padding: 50px;
+            padding: 30px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
-            justify-items: center; 
-            gap: 10px;
-            margin-left: 280px; 
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-left: 280px;
+            margin-right: 30px;
         }
 
         .box {
-            background: white;
+            background: var(--light-color);
             padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
             text-align: center;
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 600;
             cursor: pointer;
-            transition: transform 0.3s ease-in-out;
+            transition: var(--transition);
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
         }
 
         .box:hover {
-            background: #ddd;
-            transform: scale(1.05);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.15);
+            background-color: #f0f4ff;
         }
 
-        .sidebar { 
-            width: 250px; 
-            background: #333; 
-            color: white; 
-            padding: 20px; 
-            height: 100vh; 
-            position: fixed; 
-            top: 0; 
-            left: 0; 
-            text-align: center; 
+        .sidebar {
+            width: 250px;
+            background: linear-gradient(135deg, #3a4b8c, #2c3e50);
+            color: white;
+            padding: 25px 15px;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            text-align: center;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            color: var(--light-color);
+            margin-bottom: 30px;
+            font-size: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .sidebar h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background-color: var(--accent-color);
         }
 
         .header {
-            color: black;
-            padding: 20px;
+            background: var(--light-color);
+            color: var(--dark-color);
+            padding: 25px;
             text-align: center;
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 1.8rem;
+            font-weight: 700;
             margin-left: 280px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: relative;
+            z-index: 1;
         }
 
         .user-info {
-    background: linear-gradient(to right, #ffffff, #f9f9f9);
-    padding: 30px;
-    border-radius: 15px;
-    margin: 30px 50px 20px 280px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.user-info:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
-}
-
-.user-info h3 {
-    font-size: 26px;
-    color: #333;
-    margin-bottom: 20px;
-    border-bottom: 2px solid #ccc;
-    padding-bottom: 10px;
-}
-
-.user-info p {
-    margin: 10px 0;
-    font-size: 18px;
-    color: #555;
-    line-height: 1.6;
-}
-
-.user-info p strong {
-    color: #000;
-}
-
-
-        .count-box { 
-            background: white; 
-            color: black; 
-            padding: 10px; 
-            border-radius: 8px; 
-            font-size: 15px; 
-            font-weight: bold; 
-            margin-top: 20px; 
-            animation: fadeIn 1s ease-in-out; 
-            cursor: pointer;
+            background: var(--light-color);
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 50px 20px 280px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            border-top: 3px solid var(--primary-color);
         }
 
-        .count-box1 { 
-            background: rgb(221, 42, 42); 
-            color: white; 
-            padding: 10px; 
-            border-radius: 8px; 
-            font-size: 15px; 
-            font-weight: bold; 
+        .user-info:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-info h3 {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .user-info p {
+            margin: 12px 0;
+            font-size: 1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .user-info p strong {
+            color: var(--dark-color);
+            font-weight: 600;
+            min-width: 100px;
+            display: inline-block;
+        }
+
+        .count-box {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--light-color);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 15px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .count-box:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateX(5px);
+        }
+
+        .count-box1 {
+            background: var(--accent-color);
+            color: var(--light-color);
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
             margin-top: 20px;
-            margin-bottom: 30px; 
-            animation: fadeIn 1s ease-in-out; 
-            cursor: pointer;
+            margin-bottom: 30px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
         }
 
-        .count-box:hover, .count-box1:hover {
-            transform: scale(1.05);
+        .count-box1:hover {
+            background: #ff5252;
+            transform: translateX(5px);
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .box i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+
+        .emoji {
+            font-size: 1.5rem;
+            margin-right: 8px;
         }
     </style>
 </head>
 <body>
-
+    <!-- Header -->
     <div class="header">
         <h1>Client Dashboard</h1>
     </div>
@@ -195,17 +262,26 @@ try {
     <!-- Sidebar -->
     <div class="sidebar">
         <h2>Dashboard</h2>
-        <div class="count-box" onclick="window.location.href='edit_profile.php'">👥 Account</div>
-        <div class="count-box" onclick="window.location.href='addproduct.php'">➕ Buy Product</div>
-        <div class="count-box" onclick="window.location.href='manageproduct.php'">🏢 Company</div>
-        <div class="count-box" onclick="window.location.href='#'">🛒 Cart</div>
-        <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div> 
-        <div class="count-box1" onclick="window.location.href='/parksystem/logout.php'">🔒 Sign Out</div> 
+        <div class="count-box" onclick="window.location.href='edit_profile.php'">
+            <i class="bi bi-person"></i> Account
+        </div>
+        <div class="count-box" onclick="window.location.href='view_product.php'">
+            <i class="bi bi-cart-plus"></i> Buy Product
+        </div>
+        <div class="count-box" onclick="window.location.href='view_ind.php'">
+            <i class="bi bi-building"></i> Companies
+        </div>
+        <div class="count-box" onclick="window.location.href='order_history.php'">
+            <i class="bi bi-list-check"></i> View Orders
+        </div> 
+        <div class="count-box1" onclick="window.location.href='/parksystem/logout.php'">
+            <i class="bi bi-box-arrow-right"></i> Sign Out
+        </div> 
     </div>
 
     <!-- Client Info Section -->
     <div class="user-info">
-        <h3>Client Info</h3>
+        <h3>Client Information</h3>
         <p><strong>Name:</strong> <?= htmlspecialchars($clientName) ?></p>
         <p><strong>Email:</strong> <?= htmlspecialchars($clientEmail) ?></p>
         <p><strong>Phone:</strong> <?= htmlspecialchars($clientPhone) ?></p>
@@ -214,16 +290,16 @@ try {
 
     <!-- Orders & Cart Summary Section -->
     <div class="container">
-        <div class="box">
-            🛒 Cart Items: <?= $cartItemsCount ?>
+        <div class="box" onclick="window.location.href='order_history.php'">
+            <i class="bi bi-box-seam"></i>
+            <div>Orders: <?= $ordersCount > 0 ? $ordersCount : 'N/A' ?></div>
         </div>
         <div class="box">
-            📦 Orders: <?= $ordersCount ?>
-        </div>
-        <div class="box">
-            🏷️ Account Status: Active
+            <i class="bi bi-shield-check"></i>
+            <div>Account Status: Active</div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

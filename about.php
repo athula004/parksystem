@@ -4,174 +4,250 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us | LandLink</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #34495e;
+            --accent-color: #3498db;
+            --text-color: #333;
+            --light-color: #fff;
+            --dark-color: #1a1a1a;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
         @keyframes fadeIn {
             from {
                 opacity: 0;
-                transform: translateY(-20px);
+                transform: translateY(20px);
             }
             to {
                 opacity: 1;
                 transform: translateY(0);
             }
         }
+
         body {
             margin: 0;
             padding: 0;
             font-family: "Poppins", sans-serif;
-            background-color: white;
-            color: black;
+            background-color: var(--light-color);
+            color: var(--text-color);
             line-height: 1.8;
-            padding: 40px 20px;
+            padding-top: 80px;
         }
 
         .about-section {
             max-width: 900px;
-            margin: auto;
-            text-align: justify;
-            padding-top: 36px;
-            animation: fadeIn 1s ease-in-out;
+            margin: 0 auto;
+            padding: 40px;
+            animation: fadeIn 0.8s ease-in-out;
         }
 
         h1 {
             text-align: center;
-            font-size: 36px;
-            margin-bottom: 20px;
-            animation: fadeIn 1.5s ease-in-out;
-            
+            font-size: 2.8rem;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-bottom: 1rem;
         }
-        p{
-            animation: fadeIn 1.5s ease-in-out;
+
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--accent-color);
         }
 
         h2 {
-            font-size: 28px;
-            margin-top: 30px;
-            color: black;
-            animation: fadeIn 1.5s ease-in-out;
+            font-size: 1.8rem;
+            margin: 3rem 0 1.5rem;
+            color: var(--primary-color);
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 5px;
+            background: var(--accent-color);
+        }
+
+        p {
+            font-size: 1.1rem;
+            margin-bottom: 1.5rem;
+            animation: fadeIn 1s ease-in-out;
         }
 
         .btn {
-            display: block;
+            display: inline-block;
             text-align: center;
-            margin: 30px auto;
-            padding: 12px 20px;
-            background-color: black;
-            color: white;
+            margin: 2rem auto;
+            padding: 1rem 2rem;
+            background-color: var(--primary-color);
+            color: var(--light-color);
             text-decoration: none;
-            border-radius: 5px;
-            font-size: 18px;
-            width: 200px;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow);
+            border: 2px solid var(--primary-color);
         }
 
         .btn:hover {
-            background-color: white;
-            color: black;
-            border: 1px solid black;
+            background-color: transparent;
+            color: var(--primary-color);
+            transform: translateY(-3px);
         }
 
         footer {
             text-align: center;
-            background: black;
-            color: white;
-            padding: 5px;
-            margin-top: 50px;
-            border-radius: 5px;
+            background: var(--dark-color);
+            color: var(--light-color);
+            padding: 1.5rem;
+            margin-top: 3rem;
         }
+
         .navbar {
             width: 100%;
-            background-color: rgb(10, 10, 10);
+            background-color: var(--dark-color);
             display: flex;
-            justify-content: normal;
-            gap: 14px;
+            justify-content: center;
             align-items: center;
-            padding: 5px 20px;
+            padding-top: 1rem;
+            padding-bottom: 1rem;
             position: fixed;
-            top: 1px;
+            top: 0;
             left: 0;
             z-index: 1000;
-            font-family: "Poppins", sans-serif;
-            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
+
         .navbar a {
-            color: white; 
+            color: var(--light-color);
             text-decoration: none;
-            padding: 12px 16px;
-            font-size: 15px;
+            padding: 0.7rem 1.2rem;
+            font-size: 0.95rem;
             font-weight: 500;
-            transition: all 0.3s ease;
-        }
-        .navbar a:hover {
-            background-color: white;
-            color: black;
+            transition: var(--transition);
             border-radius: 5px;
+            margin: 0 0.2rem;
         }
+
+        .navbar a:hover {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+        }
+
         .dropdown {
             position: relative;
-            display: inline-block;
         }
+
         .dropdown-content {
             display: none;
             position: absolute;
-            background-color: white;
+            background-color: var(--light-color);
             min-width: 200px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 5px;
+            box-shadow: var(--shadow);
+            border-radius: 8px;
+            z-index: 1;
             overflow: hidden;
+            top: 100%;
+            left: 0;
         }
+
         .dropdown:hover .dropdown-content {
             display: block;
         }
+
         .dropdown-content a {
-            color: black;
+            color: var(--text-color);
+            padding: 0.8rem 1rem;
+            text-decoration: none;
             display: block;
-            padding: 10px 15px;
             text-align: left;
+            transition: var(--transition);
         }
+
         .dropdown-content a:hover {
-            background-color: rgb(240, 240, 240);
+            background-color: #f8f9fa;
         }
+
         .navbar .cname {
-            font-size: 20px;
+            font-size: 1.3rem;
             font-weight: 600;
+            margin-right: auto;
+            color: var(--light-color);
         }
+
         .navbar .cname:hover {
             background-color: transparent;
-            color: white;
         }
+
         .active {
-        border-radius: 5px;
-        border: 1px solid white; 
+            background-color: rgba(255, 255, 255, 0.2);
         }
-     
+
+        .dropdown-toggle::after {
+            display: inline-block;
+            margin-left: 0.3em;
+            vertical-align: 0.15em;
+            content: "";
+            border-top: 0.35em solid;
+            border-right: 0.35em solid transparent;
+            border-bottom: 0;
+            border-left: 0.35em solid transparent;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-wrap: wrap;
+                padding: 0.8rem;
+            }
+            
+            .navbar a {
+                padding: 0.5rem 0.8rem;
+                font-size: 0.9rem;
+            }
+            
+            .about-section {
+                padding: 2rem 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="navbar">
         <a class="cname" href="home.php">LandLink</a>
         <a href="home.php">Home</a>
-        <a href="login.php">Login</a>
+        <a href="login.html">Login</a>
 
-        <div class="dropdown">
-            <a href="#">Industry ▼</a>
-            <div class="dropdown-content">
-                <a href="#">Check Approval Status</a>
-                <a href="#">Register</a>
-            </div>
-        </div>
-
-        <div class="dropdown">
-            <a href="#">Client ▼</a>
-            <div class="dropdown-content">
-                <a href="#">Register</a>
-                <a href="#">Check Approval Status</a>
-            </div>
-        </div>
+       
 
         <a href="#">Existing Industry</a>
         <a href="#">Products</a>
         <a class="active" href="about.php">About Us</a>
     </div>
+
     <section class="about-section">
         <h1>About LandLink</h1>
         <p>
@@ -207,12 +283,10 @@
             We have helped numerous industries establish themselves with ease, reducing costs and increasing productivity. 
             Our commitment to innovation and customer satisfaction continues to drive us toward making industrial growth a seamless experience for all.
         </p>
->
     </section>
 
     <footer>
         <p>&copy; 2025 LandLink. All Rights Reserved.</p>
     </footer>
-
 </body>
 </html>

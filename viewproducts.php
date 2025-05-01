@@ -1,7 +1,6 @@
 <?php
-require '../db.php';
-require '../check_role.php';
-checkRole(["staff"]);
+require 'db.php';
+
 
 $products = $productsCollection->find([]);
 ?>
@@ -186,7 +185,7 @@ $products = $productsCollection->find([]);
 </head>
 <body>
 
-<a href="staffdashboard.php" class="back-btn">
+<a href="home.php" class="back-btn">
     <i class="bi bi-arrow-left"></i> Back to Dashboard
 </a>
 

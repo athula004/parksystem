@@ -115,7 +115,7 @@ $industryCount = $industriesCollection->countDocuments(['approval_status' => 'ap
         <div class="count-box" onclick="window.location.href='industry_approve.php'">✅ Approve Industry</div>
         <div class="count-box" onclick="window.location.href='viewindustry.php'">🏭 View Industry</div>
         <div class="count-box" onclick="window.location.href='view_materials.php'">🛒 View Materials</div>
-        <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div>
+        <div class="count-box" onclick="window.location.href='view_orders.php'">📊 View Orders</div>
         <div class="count-box" onclick="window.location.href='admin_support.php'">💬 Messages</div>  
         <div class="count-box" onclick="window.location.href='land.php'">🌆 Add LandPhoto</div>
         <div class="count-box1" onclick="window.location.href='../logout.php'">🔒 Sign Out</div> 

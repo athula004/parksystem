@@ -60,68 +60,138 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Profile</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f4f4f4;
-            font-family: Arial, sans-serif;
+        :root {
+            --primary-color: #4a6bff;
+            --error-color: #ff4757;
+            --light-color: #ffffff;
+            --dark-color: #333333;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
         }
+
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark-color);
+        }
+
         .container {
             max-width: 600px;
-            margin: 80px auto;
-            background: #fff;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            margin: 50px auto;
+            background: var(--light-color);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--primary-color);
         }
+
         h2 {
             text-align: center;
-            margin-bottom: 25px;
-            color: #333;
+            margin-bottom: 30px;
+            color: var(--primary-color);
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 10px;
         }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background-color: var(--primary-color);
+        }
+
         form label {
             display: block;
-            margin-bottom: 6px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 600;
             color: #555;
         }
-        form input[type="text"], 
+
+        form input[type="text"],
         form input[type="password"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px 15px;
             margin-bottom: 20px;
             border-radius: 8px;
-            border: 1px solid #ccc;
+            border: 1px solid var(--border-color);
             font-size: 16px;
+            transition: var(--transition);
         }
+
+        form input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(74, 107, 255, 0.2);
+            outline: none;
+        }
+
         .btn {
             width: 100%;
-            padding: 12px;
-            background: #333;
-            color: #fff;
+            padding: 14px;
+            background: var(--primary-color);
+            color: var(--light-color);
             border: none;
             border-radius: 8px;
-            font-size: 18px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
-            transition: background 0.3s ease;
+            transition: var(--transition);
+            margin-top: 10px;
         }
+
         .btn:hover {
-            background: #555;
+            background: #3a56e8;
+            transform: translateY(-2px);
         }
+
         .error {
-            color: red;
+            color: var(--error-color);
             text-align: center;
             margin-bottom: 20px;
+            padding: 12px;
+            background-color: rgba(255, 71, 87, 0.1);
+            border-radius: 8px;
+            border-left: 4px solid var(--error-color);
         }
-        a.back-link {
-            display: block;
-            text-align: center;
-            margin-top: 20px;
-            color: #333;
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 25px;
+            color: var(--primary-color);
             text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
         }
-        a.back-link:hover {
+
+        .back-link:hover {
+            color: #3a56e8;
             text-decoration: underline;
+        }
+
+        .back-link i {
+            margin-right: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        .password-note {
+            font-size: 14px;
+            color: #666;
+            margin-top: -15px;
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -133,25 +203,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (isset($error)) { echo "<div class='error'>$error</div>"; } ?>
 
     <form method="POST">
-        <label for="name">Name:</label>
-        <input type="text" name="name" id="name" value="<?= htmlspecialchars($clientData['name'] ?? '') ?>" required>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" name="name" id="name" value="<?= htmlspecialchars($clientData['name'] ?? '') ?>" required>
+        </div>
 
-        <label for="address">Address:</label>
-        <input type="text" name="address" id="address" value="<?= htmlspecialchars($clientData['address'] ?? '') ?>" required>
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <input type="text" name="address" id="address" value="<?= htmlspecialchars($clientData['address'] ?? '') ?>" required>
+        </div>
 
-        <label for="phone">Phone:</label>
-        <input type="text" name="phone" id="phone" value="<?= htmlspecialchars($clientData['phone'] ?? '') ?>" required>
+        <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input type="text" name="phone" id="phone" value="<?= htmlspecialchars($clientData['phone'] ?? '') ?>" required>
+        </div>
 
-        <label for="password">New Password (Leave blank if not changing):</label>
-        <input type="password" name="password" id="password">
+        <div class="form-group">
+            <label for="password">New Password:</label>
+            <input type="password" name="password" id="password">
+            <p class="password-note">Leave blank if you don't want to change your password</p>
+        </div>
 
-        <label for="confirm_password">Confirm New Password:</label>
-        <input type="password" name="confirm_password" id="confirm_password">
+        <div class="form-group">
+            <label for="confirm_password">Confirm New Password:</label>
+            <input type="password" name="confirm_password" id="confirm_password">
+        </div>
 
         <button type="submit" class="btn">Update Profile</button>
     </form>
 
-    <a href="clientdashboard.php" class="back-link">← Back to Dashboard</a>
+    <a href="clientdashboard.php" class="back-link">
+        <i class="bi bi-arrow-left"></i> Back to Dashboard
+    </a>
 </div>
 
 </body>

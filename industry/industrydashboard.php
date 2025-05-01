@@ -169,8 +169,9 @@ try {
         <div class="count-box" onclick="window.location.href='edit_profile.php'">👥 Account</div>
         <div class="count-box" onclick="window.location.href='addproduct.php'">➕ Add Product</div>
         <div class="count-box" onclick="window.location.href='manageproduct.php'">👥 Manage Product</div>
-        <div class="count-box" onclick="window.location.href='#'">🛒 Buy Materials</div>
-        <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div> 
+        <div class="count-box" onclick="window.location.href='raw_materials_list.php'">🛒 Buy Materials</div>
+        <div class="count-box" onclick="window.location.href='industry_orders.php'">📊 View Product Orders</div> 
+        <div class="count-box" onclick="window.location.href='view_raw_orders.php'">📊 My Orders</div> 
         <div class="count-box" onclick="window.location.href='industry_support.php'">💬 Messages</div> 
         <div class="count-box1" onclick="window.location.href='/parksystem/logout.php'">🔒 Sign Out</div> 
     </div>
@@ -179,8 +180,7 @@ try {
     <div class="user-info">
         <h3>Industry Info</h3>
         <p><strong>Name:</strong> <?= htmlspecialchars($industryName) ?></p>
-        <p><strong>Contact Person:</strong> <?= htmlspecialchars($industryContact) ?></p>
-        <p><strong>Phone:</strong> <?= htmlspecialchars($industryPhone) ?></p>
+        <p><strong>Phone:</strong> <?= htmlspecialchars($industryContact) ?></p>
         <p><strong>Address:</strong> <?= htmlspecialchars($industryAddress) ?></p>
     </div>
 

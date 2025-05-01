@@ -114,7 +114,7 @@ $clinetCount = $clientsCollection->countDocuments(['approval_status' => 'approve
         <div class="count-box" onclick="window.location.href='../client/manage_client.php'">👥 Manage Client</div>
         <div class="count-box" onclick="window.location.href='viewindustry.php'">🏭 View Industry</div>
         <div class="count-box" onclick="window.location.href='manage_raw_materials.php'">🛒 Manage Raw Materials</div>
-        <div class="count-box" onclick="window.location.href='#'">📊 View Orders</div>
+        <div class="count-box" onclick="window.location.href='view_orders.php'">📊 View Orders</div>
         <div class="count-box" onclick="window.location.href='view_products.php'">📊 View Products</div>
         <div class="count-box1" onclick="window.location.href='../logout.php'">🔒 Sign Out</div> 
 
