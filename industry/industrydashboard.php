@@ -12,7 +12,7 @@ checkRole(["industry"]);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
+    <title>Industry Dashboard</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -104,7 +104,7 @@ checkRole(["industry"]);
 </head>
 <body>
     <div class="header">
-        <h1>industry Dashboard</h1>
+        <h1>Industry Dashboard</h1>
     </div>
 
     <!-- Sidebar -->
