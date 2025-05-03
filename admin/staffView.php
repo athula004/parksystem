@@ -63,6 +63,21 @@ $totalStaff = $staffCollection->countDocuments(); // Get total staff count
             border-radius: 5px; 
         }
         .edit-btn:hover { background: #333; }
+        .back-btn {
+    display: inline-block;
+    margin: 20px 0 10px 20px;
+    background-color: #000;
+    color: #fff;
+    padding: 8px 16px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 14px;
+    transition: background 0.3s ease;
+}
+.back-btn:hover {
+    background-color: #333;
+}
+
 
         /* Animation */
         @keyframes fadeIn {
@@ -82,6 +97,10 @@ $totalStaff = $staffCollection->countDocuments(); // Get total staff count
 
     <!-- Main Content -->
     <div class="content">
+    <a href="admin_dashboard.php" class="back-btn">
+    ← Back to Dashboard
+</a>
+
         <h2>Staff List</h2>
         <table>
             <tr>

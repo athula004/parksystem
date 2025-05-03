@@ -62,10 +62,13 @@ try {
 <body>
 <div class="container py-5">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>My Orders</h2>
-        <a href="view_product.php" class="btn btn-primary">Continue Shopping</a>
+    <div>
+        <a href="clientdashboard.php" class="btn btn-outline-secondary me-2">← Back</a>
+        <h2 class="d-inline">My Orders</h2>
     </div>
-    
+    <a href="view_product.php" class="btn btn-primary">Continue Shopping</a>
+</div>
+
     <?php if (empty($ordersArray)): ?>
         <div class="empty-state">
             <i class="bi bi-box-seam" style="font-size: 3rem;"></i>
