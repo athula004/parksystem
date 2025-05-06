@@ -63,7 +63,7 @@ try {
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #4a6bff;
+            --primary-color:rgb(3, 4, 8);
             --secondary-color: #f8f9fa;
             --accent-color: #ff6b6b;
             --dark-color: #333;
@@ -115,7 +115,7 @@ try {
 
         .sidebar {
             width: 250px;
-            background: linear-gradient(135deg, #3a4b8c, #2c3e50);
+            background: linear-gradient(135deg,rgb(1, 2, 7), #2c3e50);
             color: white;
             padding: 25px 15px;
             height: 100vh;

@@ -112,23 +112,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
             color: white;
         }
 
-        .back-btn {
-            display: inline-block;
-            margin-top: 15px;
+        .home-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: black;
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
             text-decoration: none;
-            color: #333;
-            border: 1px solid #ddd;
-            padding: 6px 12px;
-            background: #ecf0f1;
-            border-radius: 4px;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            font-weight: 500;
         }
 
-        .back-btn:hover {
-            background: #bdc3c7;
+        .home-button:hover {
+            background-color: black;
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
+
+<a href="admin_dashboard.php" class="home-button">Back</a>
 
 <div class="container">
     <h2>Reset Password</h2>
@@ -139,8 +147,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
 
     <?php if ($success): ?>
         <div class="message success"><?php echo $success; ?></div>
-        <a href="javascript:history.back()" class="back-btn">← Back</a>
-    <?php elseif ($userId): ?>
+    <?php endif; ?>
+
+    <?php if ($userId && !$success): ?>
         <form method="POST">
             <input type="hidden" name="user_id" value="<?php echo htmlspecialchars($userId); ?>">
 
@@ -152,13 +161,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['user_id'])) {
 
             <button type="submit">Update Password</button>
         </form>
-
-        <a href="javascript:history.back()" class="back-btn">← Back</a>
-    <?php else: ?>
+    <?php elseif (!$userId): ?>
         <p class="message error">Invalid request. No user selected.</p>
-        <a href="javascript:history.back()" class="back-btn">← Back</a>
     <?php endif; ?>
 </div>
+
 
 </body>
 </html>

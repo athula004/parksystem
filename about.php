@@ -243,8 +243,8 @@
 
        
 
-        <a href="#">Existing Industry</a>
-        <a href="#">Products</a>
+        <a href="industry/industry.php">Existing Industry</a>
+        <a href="viewproducts.php">Products</a>
         <a class="active" href="about.php">About Us</a>
     </div>
 

@@ -102,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         body { font-family: Arial; padding: 20px; background: #f9f9f9; }
         .form-box { background: #fff; padding: 20px; border-radius: 8px; width: 400px; margin: auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
         input, textarea, select { width: 100%; padding: 8px; margin: 8px 0; border: 1px solid #ccc; border-radius: 4px; }
-        .btn { background: #28a745; color: #fff; border: none; padding: 10px; cursor: pointer; width: 100%; border-radius: 4px; }
+        .btn { background:rgb(4, 8, 5); color: #fff; border: none; padding: 10px; cursor: pointer; width: 100%; border-radius: 4px; }
         .btn:hover { background: #218838; }
         .message { margin-top: 10px; padding: 10px; border-radius: 4px; }
         .error { background: #f8d7da; color: #721c24; }
