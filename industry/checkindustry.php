@@ -37,24 +37,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
 <head>
     <meta charset="UTF-8">
     <title>Industry Approval Check</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background: white;
-            color: black;
             margin: 0;
-            padding: 0;
+            font-family:'Poppins', sans-serif;
+            background-color: white; /* White background for the entire page */
         }
 
-        .container {
-            max-width: 700px;
-            margin: 40px auto;
-            padding: 20px;
-            border: 1px solid black;
+        .back-btn {
+            display: inline-block;
+            margin: 20px;
+            text-decoration: none;
+            color: white; /* Change to black color */
+            border: 1px solid #ddd;
+            padding: 8px 16px;
+            background: black; /* White background for the button */
+            border-radius: 4px;
         }
 
-        h2, h3 {
+        .back-btn:hover {
+            background:rgb(8, 10, 10);
+        }
+
+        .main-content {
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
             text-align: center;
+            color: #333;
+            margin-bottom: 30px;
         }
 
         form {
@@ -63,21 +82,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
         }
 
         input[type="email"] {
-            padding: 8px;
+            padding: 10px;
             width: 60%;
-            border: 1px solid black;
+            border: 1px solid #ddd;
             margin-right: 10px;
+            border-radius: 4px;
         }
 
         button {
-            padding: 8px 15px;
-            border: 1px solid black;
-            background: white;
+            padding: 10px 20px;
+            border: 1px solid #ddd;
+            background: black; /* Change button color to black */
             cursor: pointer;
+            color: white;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background: #333; /* Darker black shade on hover */
         }
 
         .error {
-            color: black;
+            color: #e74c3c;
             font-weight: bold;
             text-align: center;
         }
@@ -89,12 +115,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         th, td {
             padding: 10px;
-            border: 1px solid black;
+            border: 1px solid #ddd;
             text-align: left;
         }
 
@@ -103,26 +129,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
             height: auto;
         }
 
-        .back-btn {
-            display: inline-block;
-            margin: 10px;
-            text-decoration: none;
-            color: black;
-            border: 1px solid black;
-            padding: 6px 12px;
+        .status-approved {
+            color: #2ecc71;
         }
 
-        .back-btn:hover {
-            background: #eee;
+        .status-pending {
+            color: #f39c12;
         }
+
+        .status-rejected {
+            color: #e74c3c;
+        }
+
     </style>
 </head>
 <body>
 
-<a href="../home.php" class="back-btn">← Back</a>
+<div class="header">
+    <a href="../home.php" class="back-btn">← Back to Home</a>
+</div>
 
-<div class="container">
-    <h2>Industry Approval Check</h2>
+<div class="main-content">
+    <h2>Check Industry Approval Status</h2>
 
     <form method="POST">
         <input type="email" name="email" required placeholder="Enter Industry Email">
@@ -135,7 +163,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['email'])) {
 
     <?php if ($industryData): ?>
         <h3>Approval Status:
-            <span class="<?php echo strtolower($approval_status); ?>">
+            <span class="status-<?php echo strtolower($approval_status); ?>">
                 <?php echo ucfirst($approval_status); ?>
             </span>
         </h3>

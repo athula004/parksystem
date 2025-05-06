@@ -128,11 +128,11 @@ $approvedIndustries = $industriesCollection->find(['approval_status' => 'approve
                     <?php echo isset($industry['status']) && strtolower($industry['status']) === 'inactive' ? 'Inactive' : 'Active'; ?>
                 </td>
                 <td>
-                    <form method="POST" action="reset_password.php" onsubmit="return confirm('Are you sure you want to reset this industry\'s password?');">
-                        <input type="hidden" name="user_id" value="<?php echo $industry['user_id']; ?>">
-                        <button type="submit" class="reset-btn">Reset Password</button>
-                    </form>
-                </td>
+    <form method="GET" action="reset_password.php">
+        <input type="hidden" name="user_id" value="<?php echo $industry['user_id']; ?>">
+        <button type="submit" class="reset-btn">Reset Password</button>
+    </form>
+</td>
             </tr>
         <?php endforeach; ?>
     </tbody>

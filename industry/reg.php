@@ -98,7 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         :root {
             --primary-color: #2c3e50;
             --secondary-color: #34495e;
-            --accent-color: #3498db;
+            --accent-color:rgb(234, 238, 241);
             --light-color: #ffffff;
             --dark-color: #1a1a1a;
             --border-color: #e0e0e0;
@@ -123,7 +123,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             top: 20px;
             left: 20px;
             text-decoration: none;
-            background: var(--primary-color);
+            background: black;
             color: var(--light-color);
             padding: 10px 20px;
             border-radius: 30px;
@@ -205,7 +205,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         button {
-            background-color: var(--primary-color);
+            background-color: black;
             color: var(--light-color);
             padding: 14px;
             border: none;
@@ -219,7 +219,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         button:hover {
-            background-color: var(--secondary-color);
+            background-color: green;
             transform: translateY(-2px);
         }
 

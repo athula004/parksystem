@@ -87,7 +87,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: linear-gradient(135deg, #000000, #444444);
+            background: linear-gradient(135deg,rgb(249, 245, 245),rgb(251, 250, 250));
         }
         .container {
             background: white;
@@ -135,6 +135,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         button:hover {
             background: #333;
             transform: scale(1.05);
+            background-color:green;
         }
         .back-btn {
             position: absolute;
